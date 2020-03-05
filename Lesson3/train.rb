@@ -26,7 +26,7 @@ class Train
   def route=(route)
     current_station&.send(self)
     @route = route
-    move(route[0])
+    move(route.stations.first)
   end
 
   def current_station
