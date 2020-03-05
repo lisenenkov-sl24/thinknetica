@@ -14,12 +14,12 @@ class Train
     @speed = 0
   end
 
-  def hook_railcar
-    @railcar_count += 1 if @speed == 0
+  def hook_railcar(railcar)
+    railcars.push(railcar)
   end
 
   def unhook_railcar
-    @railcar_count -= 1 if @railcar_count > 0 && @speed == 0
+    railcars.pop
   end
 
   def route=(route)
