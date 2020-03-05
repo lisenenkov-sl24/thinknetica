@@ -2,7 +2,7 @@ class Railroad
   attr_accessor stations, routes, trains
 
   def initialize
-    @stations = []
+    @stations = {}
     @routes = []
     @trains = []
   end
@@ -10,15 +10,13 @@ class Railroad
   def self.demo
     railroad = Railroad.new
     #stations
-    railroad.stations.push(Station.new('Москва'))
-    railroad.stations.push(Station.new('СПБ'))
-    railroad.stations.push(Station.new('Воронеж'))
-    railroad.stations.push(Station.new('НН'))
-    railroad.stations.push(Station.new('Самара'))
-    railroad.stations.push(Station.new('Ухань'))
+    ['Москва', 'СПБ', 'Воронеж', 'НН', 'Самара', 'Ухань'].each do |station_name|
+      @stations[station_name] = Station.new(station_name)
+    end
     #routes
-
-    railroad
+    route1 = Route.new(stations['Москва'], stations['Воронеж'])
+    route1.add(stations['Самара'])
+    railroad.routes.push(route1)
 
     railroad
   end

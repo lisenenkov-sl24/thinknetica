@@ -6,6 +6,7 @@ class Route
 
   def add(station)
     @stations.insert(-1, station)
+    self
   end
 
   def remove
