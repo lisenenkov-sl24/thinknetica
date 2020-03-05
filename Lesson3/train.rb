@@ -1,11 +1,10 @@
 class Train
-  attr_reader :number, :type, :railcar_count, :speed, :current_station
+  attr_reader :number, :type, :railcar_count, :speed
 
   def initialize(number, type, railcar_count)
     @number = number
     @type = type
     @railcar_count = railcar_count
-    @current_station = nil
   end
 
   def accelerate(value = 1)
@@ -25,19 +24,27 @@ class Train
   end
 
   def route=(route)
-    @current_station.send(self) unless @station.nil?
+    current_station&.send(self)
     @route = route
-    @current_station = route[0]
-    @current_station.accept(self)
+    move(route[0])
+  end
+
+  def current_station
+    return nil if @route.nil?
+
+    index = current_station_index
+    return nil if index.nil?
+
+    stations[index]
   end
 
   def prev_station
-    index = @route.stations.index(@station)
+    index = current_station_index
     index > 0 ? @route.stations[index - 1] : nil
   end
 
   def next_station
-    index = @route.stations.index(@station)
+    index = current_station_index
     index + 1 < @route.stations.size ? @route.stations[index + 1] : nil
   end
 
@@ -50,6 +57,12 @@ class Train
   end
 
   private
+
+  def current_station_index
+    return nil if @route.nil?
+
+    @route.stations.index { |station| station.trains.include?(self) }
+  end
 
   def move(to)
     unless to.nil?
