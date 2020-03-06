@@ -11,10 +11,14 @@ class Station
   end
 
   def send(train)
-    trains.delete(train)
+    @trains.delete(train)
   end
 
   def trains_by_type(train_type)
     @trains.select { |train| train.is_a?(train_type) }
+  end
+
+  def to_s
+    @name
   end
 end
