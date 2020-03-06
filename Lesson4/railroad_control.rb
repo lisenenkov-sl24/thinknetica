@@ -12,6 +12,7 @@ class RailroadControl
       puts ' 2 создать поезд'
       puts ' 3 управление маршрутами'
       puts ' 4 управление поездом'
+      puts ' 5 список поездов на станции'
       puts ' 0 стоп'
 
       option = gets.chomp.to_i
@@ -26,6 +27,8 @@ class RailroadControl
         manage_route
       when 4
         manage_train
+      when 5
+        station_trains
       else
         puts 'неизвестная команда'
       end
@@ -189,5 +192,12 @@ class RailroadControl
         puts 'Неверный выбор!!!'
       end
     end
+  end
+
+  def station_trains
+    station = ask_station
+    return if station.nil?
+
+    station.trains.each { |t| puts t }
   end
 end
