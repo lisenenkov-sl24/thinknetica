@@ -1,17 +1,18 @@
 class Train
-  attr_reader :number, :railcars, :speed
+  attr_reader :number, :railcars, :route
 
   def initialize(number)
     @number = number
+    @route = nil
     @railcars = []
   end
 
-  def accelerate(value = 1)
-    @speed += value
+  def to_s
+    "#{train_type} №#{number} и #{railcars.count} вагонов. По маршруту #{route} на станции #{current_station}"
   end
 
-  def stop
-    @speed = 0
+  def train_type
+    'Поезд'
   end
 
   def hook_railcar(railcar)
@@ -34,7 +35,7 @@ class Train
     index = current_station_index
     return nil if index.nil?
 
-    stations[index]
+    route.stations[index]
   end
 
   def prev_station
@@ -64,11 +65,7 @@ class Train
   end
 
   def move(to)
-    unless to.nil?
-      @current_station.send(self)
-      @current_station = to
-      @current_station.accept(self)
-    end
-    @current_station
+    current_station&.send(self)
+    to&.accept(self)
   end
 end

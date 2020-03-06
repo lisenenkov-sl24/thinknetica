@@ -4,8 +4,16 @@ class Route
     @stations = [start_station, end_station]
   end
 
+  def to_s
+    "#{stations[0]} - #{stations[-1]}"
+  end
+
+  def print_stations
+    @stations.each { |s| puts s }
+  end
+
   def add(station)
-    @stations.insert(-1, station)
+    @stations.insert(-2, station)
     self
   end
 
