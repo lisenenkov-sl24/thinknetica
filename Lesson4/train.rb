@@ -1,5 +1,5 @@
 class Train
-  attr_reader :number, :railcars, :route
+  attr_reader :number, :railcars, :route, :type
 
   def initialize(number)
     @number = number
@@ -8,15 +8,19 @@ class Train
   end
 
   def to_s
-    "#{train_type} №#{number} и #{railcars.count} вагонов. По маршруту #{route} на станции #{current_station}"
-  end
-
-  def train_type
-    'Поезд'
+    t_type = case @type
+             when :cargo
+               'Грузовой поезд'
+             when :passenger
+               'Пасажирский поезд'
+             else
+               'Поезд'
+             end
+    "#{t_type} №#{number} и #{railcars.count} вагонов. По маршруту #{route} на станции #{current_station}"
   end
 
   def hook_railcar(railcar)
-    railcars.push(railcar)
+    railcars.push(railcar) if railcar.type == @type
   end
 
   def unhook_railcar
