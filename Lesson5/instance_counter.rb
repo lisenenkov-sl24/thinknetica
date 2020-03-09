@@ -1,6 +1,9 @@
 module InstanceCounter
   module ClassMethods
-    attr_accessor :instances
+    attr_writer :instances
+    def instances
+      @instances || 0
+    end
   end
 
   def self.included(base)
@@ -10,7 +13,6 @@ module InstanceCounter
   protected
 
   def register_instance(instance)
-    self.class.instances = [] if self.class.instances.nil?
-    self.class.instances.push(instance)
+    self.class.instances += 1
   end
 end
