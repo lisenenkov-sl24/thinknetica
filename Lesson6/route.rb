@@ -4,13 +4,13 @@ class Route
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
 
-    check_validity
+    validite!
 
     register_instance(self)
   end
 
   def valid?
-    check_validity
+    validite!
     true
   rescue RuntimeError
     false
@@ -35,7 +35,7 @@ class Route
 
   private
 
-  def check_validity
+  def validite!
     raise 'Не выбрана стартовая станция' unless @stations[0]
     raise 'Не выбрана конечная станция' unless @stations[-1]
   end
