@@ -4,7 +4,7 @@ require_relative 'station_control'
 module RouteControl
   def self.manage_route(railroad)
     begin
-      ask_route(railroad)
+      route = ask_route(railroad)
     rescue RuntimeError => e
       puts e.message
       return
@@ -47,7 +47,7 @@ module RouteControl
     option = gets.chomp.to_i
     case option
     when 0
-      create_route
+      create_route(railroad)
     when 1..railroad.routes.count
       railroad.routes[option - 1]
     else

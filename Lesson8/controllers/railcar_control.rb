@@ -14,7 +14,7 @@ module RailcarControl
   end
 
   def self.occupy(railcar)
-    if train.type == :cargo
+    if railcar.type == :cargo
       puts 'Объем:'
       volume = gets.chomp.to_f
       railcar.occupy_volume(volume)

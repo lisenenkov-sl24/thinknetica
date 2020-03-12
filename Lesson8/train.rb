@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'manufacturer'
 
 class Train
@@ -66,7 +64,7 @@ class Train
 
   def prev_station
     index = current_station_index
-    index > 0 ? @route.stations[index - 1] : nil
+    index.positive? ? @route.stations[index - 1] : nil
   end
 
   def next_station
@@ -85,9 +83,8 @@ class Train
   private
 
   def validite!
-    if @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
-      raise 'Неверный формат номера'
-    end
+    raise 'Неверный формат номера' if
+              @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
   end
 
   def current_station_index
