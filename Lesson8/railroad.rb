@@ -14,15 +14,17 @@ class Railroad
     @trains = {}
   end
 
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def self.demo
     railroad = Railroad.new
     # stations
-    %w[Москва СПБ Воронеж НН Самара Ухань].each do |station_name| 
-      railroad.stations[station_name] = Station.new(station_name) 
+    %w[Москва СПБ Воронеж НН Самара Ухань].each do |station_name|
+      railroad.stations[station_name] = Station.new(station_name)
     end
 
     # routes
-    route1 = Route.new(railroad.stations['Москва'], railroad.stations['Воронеж'])
+    route1 = Route.new(railroad.stations['Москва'],
+                       railroad.stations['Воронеж'])
     route1.add(railroad.stations['Самара'])
     railroad.routes.push(route1)
 
@@ -57,4 +59,5 @@ class Railroad
 
     railroad
   end
+  # rubocop:enable all
 end
