@@ -29,7 +29,7 @@ module TrainControl
         passenger: PassengerTrain,
         cargo: CargoTrain
       }[CommonControl.ask_train_type]
-      railroad.trains[number] = train_type.new
+      railroad.trains[number] = train_type.new(number)
 
       puts "Создан #{railroad.trains[number]}"
 
@@ -67,7 +67,7 @@ module TrainControl
       when 5
         print_train_railcars(train)
       when 6
-        railcar = ask_railcar
+        railcar = ask_railcar(train)
         RailcarControl.occupy(railcar)
       else
         puts 'Неверный выбор!!!'

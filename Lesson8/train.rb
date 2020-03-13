@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'manufacturer'
 
 class Train
@@ -85,9 +83,8 @@ class Train
   private
 
   def validite!
-    # rubocop:disable Layout/LineLength
-    raise 'Неверный формат номера' if @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
-    # rubocop:enable all
+    raise 'Неверный формат номера' if
+              @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
   end
 
   def current_station_index

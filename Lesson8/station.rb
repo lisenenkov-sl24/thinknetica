@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'instance_counter'
 class Station
   include InstanceCounter
