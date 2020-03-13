@@ -2,6 +2,7 @@ require_relative 'railcar_control'
 require_relative 'common_control'
 
 module TrainControl
+  # rubocop:disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
   def self.ask_train(railroad, question = 'Поезд')
     puts "#{question} (? вывести список)"
     loop do
@@ -34,12 +35,6 @@ module TrainControl
 
       railroad.trains[number]
     end
-  end
-
-  def self.ask_railcar(train)
-    puts "Номер вагона (1-#{train.railcars.count}):"
-    railcar_index = gets.chomp.to_i - 1
-    train.railcars[railcar_index]
   end
 
   def self.manage_train(railroad)
@@ -78,6 +73,13 @@ module TrainControl
         puts 'Неверный выбор!!!'
       end
     end
+  end
+  # rubocop:enable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+
+  def self.ask_railcar(train)
+    puts "Номер вагона (1-#{train.railcars.count}):"
+    railcar_index = gets.chomp.to_i - 1
+    train.railcars[railcar_index]
   end
 
   def self.print_train_railcars(train, prefix = '')

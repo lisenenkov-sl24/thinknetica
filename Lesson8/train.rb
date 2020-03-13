@@ -66,7 +66,7 @@ class Train
 
   def prev_station
     index = current_station_index
-    index > 0 ? @route.stations[index - 1] : nil
+    index.positive? ? @route.stations[index - 1] : nil
   end
 
   def next_station
@@ -85,9 +85,9 @@ class Train
   private
 
   def validite!
-    if @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
-      raise 'Неверный формат номера'
-    end
+    # rubocop:disable Layout/LineLength
+    raise 'Неверный формат номера' if @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
+    # rubocop:enable all
   end
 
   def current_station_index
