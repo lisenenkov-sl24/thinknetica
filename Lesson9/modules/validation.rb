@@ -2,8 +2,7 @@ module Validation
   def validate(name, validation_type, param = nil)
     attr_name = "@#{name}".to_sym
     @validations ||= Hash.new { |hash, key| hash[key] = [] }
-    validations = @validations
-    validations[attr_name].push(
+    @validations[attr_name].push(
       case validation_type
       when :presence
         ->(attr_value) { raise "Значение #{name} не заполнено" if !attr_value || attr_value == '' }
@@ -15,11 +14,15 @@ module Validation
         raise 'Неизвестный тип валидации'
       end
     )
-    return if method_defined?(:validate!)
+    define_validate_methods(@validations) unless method_defined?(:validate!)
+  end
 
+  private
+
+  def define_validate_methods(validations)
     define_method(:validate!) do
-      validations.each do |attr_name, check_methods|
-        attr = instance_variable_get(attr_name)
+      validations.each do |a_name, check_methods|
+        attr = instance_variable_get(a_name)
         check_methods.each { |check_method| check_method.call(attr) }
       end
     end
@@ -31,7 +34,5 @@ module Validation
         false
       end
     end
-  end
-  class << self
   end
 end

@@ -23,9 +23,9 @@ class Railroad
     railroad.stations['СПБ'].name = 'Петроград'
     railroad.stations['СПБ'].name = 'Ленинград'
     railroad.stations['СПБ'].name = 'СПБ'
-    
-    #puts railroad.stations['СПБ'].name_history.to_s
-    #Station.new(1)
+
+    # puts railroad.stations['СПБ'].name_history.to_s
+    Station.new(1)
 
     # routes
     route1 = Route.new(railroad.stations['Москва'],
