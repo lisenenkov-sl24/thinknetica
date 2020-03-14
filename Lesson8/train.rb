@@ -10,7 +10,7 @@ class Train
     @route = nil
     @railcars = []
 
-    validite!
+    validate!
 
     register_instance
   end
@@ -29,7 +29,7 @@ class Train
   end
 
   def valid?
-    validite!
+    validate!
     true
   rescue RuntimeError
     false
@@ -82,7 +82,7 @@ class Train
 
   private
 
-  def validite!
+  def validate!
     raise 'Неверный формат номера' if
               @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
   end

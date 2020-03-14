@@ -12,7 +12,6 @@ module StationControl
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def self.ask_station(railroad, question = 'Станция')
     puts "#{question} (? вывести список)"
     loop do
@@ -28,7 +27,6 @@ module StationControl
       puts 'Станция не существует!!!'
     end
   end
-  # rubocop:enable all
 
   def self.station_trains(railroad)
     station = ask_station(railroad)

@@ -2,7 +2,6 @@ require_relative 'train_control'
 require_relative 'station_control'
 
 module RouteControl
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
   def self.manage_route(railroad)
     begin
       route = ask_route(railroad)
@@ -55,7 +54,6 @@ module RouteControl
       raise 'Неверный выбор!!!'
     end
   end
-  # rubocop:enable all
 
   def self.create_route(railroad)
     station1 = StationControl.ask_station(railroad, 'Начальная станция')

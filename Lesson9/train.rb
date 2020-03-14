@@ -1,9 +1,15 @@
 require_relative 'manufacturer'
+require_relative 'modules/instance_counter'
+require_relative 'modules/validation'
 
 class Train
   include Manufacturer
   include InstanceCounter
+  extend Validation
+
   attr_reader :number, :railcars, :route, :type
+  validate :number, :format, /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
+  validate :number, :type, String
 
   def initialize(number)
     @number = number
@@ -12,7 +18,7 @@ class Train
 
     validate!
 
-    register_instance(self)
+    register_instance
   end
 
   def to_s
@@ -24,14 +30,8 @@ class Train
              else
                'Поезд'
              end
-    "#{t_type} №#{number} и #{railcars.count} вагонов. По маршруту #{route} на станции #{current_station}"
-  end
-
-  def valid?
-    validate!
-    true
-  rescue RuntimeError
-    false
+    "#{t_type} №#{number} и #{railcars.count} вагонов. \
+    По маршруту #{route} на станции #{current_station}"
   end
 
   def hook_railcar(railcar)
@@ -63,7 +63,7 @@ class Train
 
   def prev_station
     index = current_station_index
-    index > 0 ? @route.stations[index - 1] : nil
+    index.positive? ? @route.stations[index - 1] : nil
   end
 
   def next_station
@@ -80,10 +80,6 @@ class Train
   end
 
   private
-
-  def validate!
-    raise 'Неверный формат номера' if @number !~ /^[[:word:]\d]{3}-?[[:word:]\d]{2}$/
-  end
 
   def current_station_index
     return nil if @route.nil?

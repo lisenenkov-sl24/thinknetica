@@ -7,13 +7,13 @@ class Station
     @name = name
     @trains = []
 
-    validite!
+    validate!
 
     register_instance(self)
   end
 
   def valid?
-    validite!
+    validate!
     true
   rescue RuntimeError
     false
@@ -41,7 +41,7 @@ class Station
 
   private
 
-  def validite!
+  def validate!
     raise 'Название не заполнено' if !@name || @name.empty?
   end
 end

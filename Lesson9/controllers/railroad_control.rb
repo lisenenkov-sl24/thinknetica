@@ -8,7 +8,6 @@ class RailroadControl
     @railroad = railroad
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
   def main_menu
     loop do
       puts 'Выберите вариант:'
@@ -41,7 +40,6 @@ class RailroadControl
       end
     end
   end
-  # rubocop:enable all
 
   private
 

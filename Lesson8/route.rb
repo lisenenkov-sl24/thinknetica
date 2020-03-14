@@ -1,16 +1,17 @@
 class Route
   include InstanceCounter
+
   attr_reader :stations
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
 
-    validite!
+    validate!
 
     register_instance
   end
 
   def valid?
-    validite!
+    validate!
     true
   rescue RuntimeError
     false
@@ -35,7 +36,7 @@ class Route
 
   private
 
-  def validite!
+  def validate!
     raise 'Не выбрана стартовая станция' unless @stations[0]
     raise 'Не выбрана конечная станция' unless @stations[-1]
   end

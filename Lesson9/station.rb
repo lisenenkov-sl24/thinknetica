@@ -1,23 +1,24 @@
-require_relative 'instance_counter'
+require_relative 'modules/instance_counter'
+require_relative 'modules/accessors'
+require_relative 'modules/validation'
 
 class Station
+  extend Accessors
+  extend Validation
   include InstanceCounter
-  attr_reader :name, :trains
+
+  attr_accessor_with_history :name
+  validate :name, :presence
+  validate :name, :type, String
+  attr_reader :trains
 
   def initialize(name)
-    @name = name
+    self.name = name
     @trains = []
 
     validate!
 
     register_instance
-  end
-
-  def valid?
-    validate!
-    true
-  rescue RuntimeError
-    false
   end
 
   def accept(train)
@@ -38,11 +39,5 @@ class Station
 
   def to_s
     @name
-  end
-
-  private
-
-  def validate!
-    raise 'Название не заполнено' if !@name || @name.empty?
   end
 end
