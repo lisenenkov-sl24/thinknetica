@@ -3,15 +3,9 @@ module Validation
     attr_name = "@#{name}".to_sym
     @validations ||= Hash.new { |hash, key| hash[key] = [] }
     @validations[attr_name].push(
-      case validation_type
-      when :presence
-        validate_presence(name)
-      when :format
-        validate_format(name, param)
-      when :type
-        validate_type(name, param)
-      else
-        raise 'Неизвестный тип валидации'
+      lambda do |attr_value|
+        validation_method = method("validate_#{validation_type}".to_sym)
+        validation_method.call(attr_value, name, param)
       end
     )
     define_validate_methods(@validations) unless method_defined?(:validate!)
@@ -19,26 +13,16 @@ module Validation
 
   private
 
-  def validate_presence(name)
-    lambda do |attr_value|
-      raise "Значение #{name} не заполнено" if !attr_value || attr_value == ''
-    end
+  def validate_presence(attr_value, name, param)
+    raise "Значение #{name} не заполнено" if !attr_value || attr_value == ''
   end
 
-  def validate_format(name, format)
-    lambda do |attr_value|
-      if attr_value !~ format
-        raise "Значение #{name} не соответствует формату #{format}"
-      end
-    end
+  def validate_format(attr_value, name, format)
+    raise "Значение #{name} не соответствует формату #{format}" if attr_value !~ format
   end
 
-  def validate_type(name, type)
-    lambda do |attr_value|
-      unless attr_value.is_a? type
-        raise "Значение #{name} должно быть типа #{type}"
-      end
-    end
+  def validate_type(attr_value, name, type)
+    raise "Значение #{name} должно быть типа #{type}" unless attr_value.is_a? type
   end
 
   def define_validate_methods(validations)
